@@ -1,10 +1,21 @@
 from django.contrib import admin
 
-from .models import Feature
+from .models import Feature, FeatureImage
 
 
-class FeatureAdmin(admin.ModelAdmin):
+@admin.register(FeatureImage)
+class FeatureImageAdmin(admin.ModelAdmin):
     ...
 
 
-admin.site.register(Feature, FeatureAdmin)
+class FeatureImageInline(admin.TabularInline):
+    model = FeatureImage
+
+
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin):
+
+    inlines = [FeatureImageInline]
+
+
+
