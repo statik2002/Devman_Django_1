@@ -25,7 +25,7 @@ class FeatureImage(models.Model):
 
     image = models.ImageField('Фото места', upload_to='palaces')
     alt = models.CharField('Alt изображения', max_length=150)
-    feature = models.ForeignKey('Feature', on_delete=models.CASCADE, related_name='feature', blank=True, null=True)
+    feature = models.ForeignKey('Feature', on_delete=models.CASCADE, related_name='images', blank=True, null=True)
     order = models.IntegerField('Позиция', default=1)
 
     class Meta:
