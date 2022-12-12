@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import Feature, FeatureImage
-from adminsortable2.admin import SortableTabularInline, SortableAdminMixin, SortableAdminBase
+from adminsortable2.admin import SortableTabularInline, SortableAdminBase
 
 
 @admin.register(FeatureImage)
