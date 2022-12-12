@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from .views import show_phones
+from .views import show_phones, show_place
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', show_phones),
+    path('places/<int:place_id>/', show_place, name='show_place')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
