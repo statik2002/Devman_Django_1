@@ -31,6 +31,7 @@ class FeatureImage(models.Model):
     class Meta:
         verbose_name = 'Фото места'
         verbose_name_plural = 'Фото мест'
+        ordering = ['order']
 
     def __str__(self):
         return self.alt[:20]

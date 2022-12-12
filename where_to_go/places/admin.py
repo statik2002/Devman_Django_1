@@ -2,16 +2,18 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from .models import Feature, FeatureImage
+from adminsortable2.admin import SortableTabularInline, SortableAdminMixin, SortableAdminBase
 
 
 @admin.register(FeatureImage)
 class FeatureImageAdmin(admin.ModelAdmin):
-    list_display = ('alt', 'order')
-    ordering = ('order', )
+    pass
 
 
-class FeatureImageInline(admin.TabularInline):
+class FeatureImageInline(SortableTabularInline):
     model = FeatureImage
+
+    list_display = ('order', 'image', 'alt', 'feature')
 
     readonly_fields = ('image_tag',)
 
@@ -25,7 +27,9 @@ class FeatureImageInline(admin.TabularInline):
 
 
 @admin.register(Feature)
-class FeatureAdmin(admin.ModelAdmin):
+class FeatureAdmin(SortableAdminBase, admin.ModelAdmin):
+
+    list_display = ('title', )
 
     inlines = [FeatureImageInline]
 
