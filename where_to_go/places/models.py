@@ -1,12 +1,13 @@
 from django.db import models
 from django.urls import reverse
+from tinymce.models import HTMLField
 
 
 class Feature(models.Model):
 
     title = models.CharField('Заголовок', max_length=250)
-    description_short = models.CharField('Короткое описание', max_length=250)
-    description_long = models.TextField('Полное описание')
+    description_short = HTMLField()
+    description_long = HTMLField()
     lng = models.FloatField('Широта', default=0.0)
     lat = models.FloatField('Долгота', default=0.0)
 
