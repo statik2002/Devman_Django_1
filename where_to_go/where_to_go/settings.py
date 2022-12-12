@@ -84,6 +84,7 @@ DATABASES = {
         'ENGINE': os.environ['DB_ENGINE'],
         'NAME': os.environ['DB_NAME'],
         'USER': os.environ['DB_USER'],
+        'HOST': os.environ['DB_HOST'],
         'PASSWORD': os.environ['DB_PASSWORD'],
         'DB_PORT': os.environ['DB_PORT']
     }
