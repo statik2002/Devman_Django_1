@@ -9,6 +9,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+
 from places.models import Feature, FeatureImage
 
 
@@ -27,7 +29,7 @@ def show_phones(request):
             "properties": {
                 "title": feature.title,
                 "placeId": "moscow_legends",
-                "detailsUrl": "places/static/places/moscow_legends.json"
+                "detailsUrl": reverse('show_place', args=[feature.pk])
             }
         }
         features_list.append(feature_params)
