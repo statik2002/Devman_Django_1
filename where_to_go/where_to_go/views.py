@@ -4,32 +4,32 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-from places.models import Feature, FeatureImage
+from places.models import Place, Image
 
 
 def show_phones(request):
 
-    features = Feature.objects.prefetch_related('images').all()
+    places = Place.objects.prefetch_related('images').all()
 
-    features_list = []
-    for feature in features:
+    places_list = []
+    for place in places:
         feature_params = {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [feature.lng, feature.lat]
+                "coordinates": [place.lng, place.lat]
             },
             "properties": {
-                "title": feature.title,
+                "title": place.title,
                 "placeId": "moscow_legends",
-                "detailsUrl": reverse('show_place', args=[feature.pk])
+                "detailsUrl": reverse('show_place', args=[place.pk])
             }
         }
-        features_list.append(feature_params)
+        places_list.append(feature_params)
 
     features_json = {
       "type": "FeatureCollection",
-      "features": features_list
+      "features": places_list
     }
 
     context = {
@@ -41,8 +41,8 @@ def show_phones(request):
 
 def show_place(request, place_id):
 
-    place = get_object_or_404(Feature, pk=place_id)
-    place_images = FeatureImage.objects.filter(feature=place)
+    place = get_object_or_404(Place, pk=place_id)
+    place_images = Image.objects.filter(feature=place)
 
     images_urls = []
     for place_image in place_images:

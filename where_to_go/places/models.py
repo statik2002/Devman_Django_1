@@ -3,7 +3,7 @@ from django.urls import reverse
 from tinymce.models import HTMLField
 
 
-class Feature(models.Model):
+class Place(models.Model):
 
     title = models.CharField('Заголовок', max_length=250)
     description_short = HTMLField()
@@ -22,11 +22,11 @@ class Feature(models.Model):
         return reverse('feature-detail', kwargs={'pk': self.pk})
 
 
-class FeatureImage(models.Model):
+class Image(models.Model):
 
     image = models.ImageField('Фото места', upload_to='palaces')
     alt = models.CharField('Alt изображения', max_length=150)
-    feature = models.ForeignKey('Feature', on_delete=models.CASCADE, related_name='images', blank=True, null=True)
+    feature = models.ForeignKey('Place', on_delete=models.CASCADE, related_name='images', blank=True, null=True)
     order = models.IntegerField('Позиция', default=1)
 
     class Meta:

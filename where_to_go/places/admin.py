@@ -1,17 +1,17 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Feature, FeatureImage
+from .models import Place, Image
 from adminsortable2.admin import SortableTabularInline, SortableAdminBase
 
 
-@admin.register(FeatureImage)
+@admin.register(Image)
 class FeatureImageAdmin(admin.ModelAdmin):
     pass
 
 
 class FeatureImageInline(SortableTabularInline):
-    model = FeatureImage
+    model = Image
 
     list_display = ('order', 'image', 'alt', 'feature')
 
@@ -26,7 +26,7 @@ class FeatureImageInline(SortableTabularInline):
         return mark_safe(f'<img src="{obj.image.url}" width="{fixed_width}" height={height_size} />')
 
 
-@admin.register(Feature)
+@admin.register(Place)
 class FeatureAdmin(SortableAdminBase, admin.ModelAdmin):
 
     list_display = ('title', )
