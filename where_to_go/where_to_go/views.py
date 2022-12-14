@@ -27,13 +27,13 @@ def index(request):
         }
         places_list.append(feature_params)
 
-    features_json = {
+    features = {
       "type": "FeatureCollection",
       "features": places_list
     }
 
     context = {
-        'features_json': features_json
+        'features_json': features
     }
 
     return render(request, 'index.html', context)
