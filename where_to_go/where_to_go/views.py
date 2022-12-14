@@ -7,7 +7,7 @@ from django.urls import reverse
 from places.models import Place, Image
 
 
-def show_phones(request):
+def index(request):
 
     places = Place.objects.prefetch_related('images').all()
 

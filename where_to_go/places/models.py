@@ -31,5 +31,5 @@ class Image(models.Model):
         ordering = ['order']
 
     def __str__(self):
-        return self.alt[:20]
+        return f'{self.image.name} --- {self.place.title[:10]}'
 

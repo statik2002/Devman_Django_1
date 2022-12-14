@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from .views import show_phones, show_place
+from .views import show_place, index
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', show_phones),
+    path('', index),
     path('places/<int:place_id>/', show_place, name='show_place'),
     path('tinymce/', include('tinymce.urls')),
 ]
