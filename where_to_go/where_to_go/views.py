@@ -11,9 +11,8 @@ def index(request):
 
     places = Place.objects.all()
 
-    places_list = []
-    for place in places:
-        feature_params = {
+    places_list = [
+        {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
@@ -24,8 +23,7 @@ def index(request):
                 "placeId": "moscow_legends",
                 "detailsUrl": reverse('show_place', args=[place.pk])
             }
-        }
-        places_list.append(feature_params)
+        } for place in places]
 
     features = {
       "type": "FeatureCollection",
