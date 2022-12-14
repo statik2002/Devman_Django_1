@@ -50,4 +50,4 @@ def show_place(request, place_id):
 
     place_dict['imgs'] = images_urls
 
-    return JsonResponse(place_dict, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 2})
+    return JsonResponse(place_dict, safe=False, json_dumps_params={'ensure_ascii': False})
