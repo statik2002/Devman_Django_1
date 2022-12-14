@@ -11,7 +11,7 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
-from places.models import Feature, FeatureImage
+from places.models import Place, Image
 
 
 class Command(BaseCommand):
@@ -23,9 +23,9 @@ class Command(BaseCommand):
         response.raise_for_status()
         place = response.json()
 
-        feature = Feature.objects.filter(title=place['title'])
-        if not feature:
-            new_feature = Feature.objects.create(
+        place = Place.objects.filter(title=place['title'])
+        if not place:
+            new_feature = Place.objects.create(
                 title=place['title'],
                 description_short=place['description_short'],
                 description_long=place['description_long'],
@@ -40,13 +40,13 @@ class Command(BaseCommand):
                 path, file_name = os.path.split(file_path)
 
                 image = BytesIO(response.content)
-                feauture_image = FeatureImage.objects.create(
+                place_image = Image.objects.create(
                     alt=place['title'][:20],
                     feature=new_feature,
                     order=counter
                 )
-                if feauture_image:
-                    feauture_image.image.save(file_name, ImageFile(image))
+                if place_image:
+                    place_image.image.save(file_name, ImageFile(image))
 
     def add_arguments(self, parser):
         parser.add_argument('url', type=str)

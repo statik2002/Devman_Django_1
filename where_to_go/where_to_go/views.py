@@ -42,7 +42,7 @@ def show_phones(request):
 def show_place(request, place_id):
 
     place = get_object_or_404(Place, pk=place_id)
-    place_images = Image.objects.filter(feature=place)
+    place_images = Image.objects.filter(place=place)
 
     images_urls = []
     for place_image in place_images:

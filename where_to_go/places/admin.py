@@ -13,7 +13,7 @@ class FeatureImageAdmin(admin.ModelAdmin):
 class FeatureImageInline(SortableTabularInline):
     model = Image
 
-    list_display = ('order', 'image', 'alt', 'feature')
+    list_display = ('order', 'image', 'place')
 
     readonly_fields = ('image_tag',)
 
