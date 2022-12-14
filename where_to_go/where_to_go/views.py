@@ -9,7 +9,7 @@ from places.models import Place, Image
 
 def index(request):
 
-    places = Place.objects.prefetch_related('images').all()
+    places = Place.objects.all()
 
     places_list = []
     for place in places:
