@@ -4,30 +4,29 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-from places.models import Place, Image
+from places.models import Place
 
 
 def index(request):
-
     places = Place.objects.all()
 
     places_list = [
         {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [place.lng, place.lat]
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [place.lng, place.lat]
             },
-            "properties": {
-                "title": place.title,
-                "placeId": "moscow_legends",
-                "detailsUrl": reverse('show_place', args=[place.pk])
+            'properties': {
+                'title': place.title,
+                'placeId': place.pk,
+                'detailsUrl': reverse('show_place', args=[place.pk])
             }
         } for place in places]
 
     features = {
-      "type": "FeatureCollection",
-      "features": places_list
+      'type': 'FeatureCollection',
+      'features': places_list
     }
 
     context = {
@@ -38,16 +37,13 @@ def index(request):
 
 
 def show_place(request, place_id):
-
     place = get_object_or_404(Place, pk=place_id)
-    place_images = Image.objects.prefetch_related('place').all()
+    place_images = place.images.all()
+    images_urls = [place_image.image.url for place_image in place_images]
+    place_feature = model_to_dict(place)
+    place_feature['imgs'] = images_urls
 
-    images_urls = []
-    for place_image in place_images:
-        images_urls.append(place_image.image.url)
-
-    place_dict = model_to_dict(place)
-
-    place_dict['imgs'] = images_urls
-
-    return JsonResponse(place_dict, safe=False, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse(
+        place_feature,
+        json_dumps_params={'ensure_ascii': False}
+    )

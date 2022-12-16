@@ -4,13 +4,8 @@ from io import BytesIO
 from urllib.parse import urlparse
 
 import requests
-from PIL import Image
-from django.core.files.base import ContentFile
 from django.core.files.images import ImageFile
-
 from django.core.management.base import BaseCommand
-from django.utils.text import slugify
-
 from places.models import Place, Image
 
 
@@ -50,6 +45,3 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('url', type=str)
-
-
-

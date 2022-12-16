@@ -6,32 +6,23 @@ from adminsortable2.admin import SortableTabularInline, SortableAdminBase
 
 
 @admin.register(Image)
-class FeatureImageAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin):
     pass
 
 
-class FeatureImageInline(SortableTabularInline):
+class ImageInline(SortableTabularInline):
     model = Image
-
     list_display = ('order', 'image', 'place')
-
-    readonly_fields = ('image_tag',)
-
+    readonly_fields = ('get_image_thumbnail',)
     extra = 1
 
-    def image_tag(self, obj):
-        fixed_width = 200
-        width_percent = (fixed_width / float(obj.image.width))
-        height_size = int((float(obj.image.height) * float(width_percent)))
-        return mark_safe(f'<img src="{obj.image.url}" width="{fixed_width}" height={height_size} />')
+    def get_image_thumbnail(self, obj):
+        return mark_safe(
+            f'<img style="max-height: 200px" src="{obj.image.url}" />'
+        )
 
 
 @admin.register(Place)
-class FeatureAdmin(SortableAdminBase, admin.ModelAdmin):
-
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     list_display = ('title', )
-
-    inlines = [FeatureImageInline]
-
-
-
+    inlines = [ImageInline]
