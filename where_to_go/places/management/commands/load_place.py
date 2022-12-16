@@ -36,7 +36,6 @@ class Command(BaseCommand):
 
                 image = BytesIO(response.content)
                 place_image = Image.objects.create(
-                    alt=place['title'][:20],
                     feature=new_feature,
                     order=counter
                 )
