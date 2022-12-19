@@ -10,24 +10,23 @@ from places.models import Place, Image
 
 
 class Command(BaseCommand):
-    help = 'The Zen of Python'
+    help = 'Скрипт загрузки данных из JSON файла.'
 
     def handle(self, *args, **options):
-
         response = requests.get(options['url'])
         response.raise_for_status()
-        place = response.json()
+        place_from_file = response.json()
 
-        place = Place.objects.filter(title=place['title'])
+        place = Place.objects.filter(title=place_from_file['title'])
         if not place:
             new_feature = Place.objects.create(
-                title=place['title'],
-                description_short=place['description_short'],
-                description_long=place['description_long'],
-                lng=place['coordinates']['lng'],
-                lat=place['coordinates']['lat'],
+                title=place_from_file['title'],
+                description_short=place_from_file['description_short'],
+                description_long=place_from_file['description_long'],
+                lng=place_from_file['coordinates']['lng'],
+                lat=place_from_file['coordinates']['lat'],
             )
-            for counter, img_url in enumerate(place['imgs']):
+            for counter, img_url in enumerate(place_from_file['imgs']):
                 response = requests.get(img_url)
                 response.raise_for_status()
 
