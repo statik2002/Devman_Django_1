@@ -15,21 +15,23 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         response = requests.get(options['url'])
         response.raise_for_status()
-        place_from_file = response.json()
+        place_payload = response.json()
 
-        place, created = Place.objects.update_or_create(
-            title=place_from_file.get('title'),
-            description_short=place_from_file.get('description_short', ''),
-            description_long=place_from_file.get('description_long', ''),
-            lng=place_from_file.get('coordinates').get('lng'),
-            lat=place_from_file.get('coordinates').get('lat'),
-            defaults={'title': place_from_file.get('title')}
-        )
-
-        if not created:
+        if not place_payload.get('coordinates').get('lng') \
+                or not place_payload.get('coordinates').get('lat'):
             return
 
-        for counter, img_url in enumerate(place_from_file.get('imgs', [])):
+        place, created = Place.objects.update_or_create(
+            title=place_payload.get('title', 'Без названия'),
+            defaults={
+                'description_short': place_payload.get('description_short', ''),
+                'description_long': place_payload.get('description_long', ''),
+                'lng': place_payload.get('coordinates').get('lng'),
+                'lat': place_payload.get('coordinates').get('lat')
+            }
+        )
+
+        for counter, img_url in enumerate(place_payload.get('imgs', [])):
             response = requests.get(img_url)
             response.raise_for_status()
 
