@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand
 from places.models import Place, Image
 
 
-def upload_image(images_urls, place):
+def upload_images(images_urls, place):
     for counter, img_url in enumerate(images_urls):
         response = requests.get(img_url)
         response.raise_for_status()
@@ -43,7 +43,7 @@ class Command(BaseCommand):
             }
         )
 
-        upload_image(place_payload.get('imgs', []), place)
+        upload_images(place_payload.get('imgs', []), place)
 
     def add_arguments(self, parser):
         parser.add_argument('url', type=str)
